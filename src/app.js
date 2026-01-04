@@ -28,7 +28,9 @@ const app = express()
 // Allow requests from frontend (localhost:5173 and 5174 are common dev ports)
 app.use(cors({
     origin: "https://codo-frontend.vercel.app",
-    credentials: true // Allow cookies to be sent
+    credentials: true, // Allow cookies to be sent
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"]
 }));
 
 // Parse JSON data from requests

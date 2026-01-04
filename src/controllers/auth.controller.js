@@ -104,10 +104,11 @@ const loginUser = async (req, res) => {
 
         // SET COOKIE
         res.cookie("token", token, {
-            httpOnly: true,   // JS cannot access
-            secure: false,    // true in production (HTTPS)
-            sameSite: "none",
-            maxAge: 24 * 60 * 60 * 1000 // 1 day
+            httpOnly: true,
+            secure: true,      // MUST be true for Vercel (HTTPS)
+            sameSite: "none",  // MUST be "none" for cross-domain cookies
+            maxAge: 24 * 60 * 60 * 1000,
+            path: "/"
         });
     
         return res
@@ -128,7 +129,13 @@ const loginUser = async (req, res) => {
 
 const logoutUser = async (req, res) => {
     try {
-        res.clearCookie("token")
+        // res.clearCookie("token")
+        res.clearCookie("token", {
+            httpOnly: true,
+            secure: true,
+            sameSite: "none",
+            path: "/"
+        });
         return res
         .status(200)
         .json({

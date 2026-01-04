@@ -105,7 +105,7 @@ const loginUser = async (req, res) => {
         // SET COOKIE
         res.cookie("token", token, {
             httpOnly: true,   // JS cannot access
-            secure: true,    // true in production (HTTPS)
+            secure: false,    // true in production (HTTPS)
             sameSite: "none",
             maxAge: 24 * 60 * 60 * 1000 // 1 day
         });

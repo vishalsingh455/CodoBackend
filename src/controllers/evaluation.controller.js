@@ -7,21 +7,20 @@ const evaluateSubmission = async (submissionId) => {
     try {
         // fetch submission
         const submission = await Submission.findById(submissionId)
-        if (!submission) return
+        if(!submission) return
 
         //fetch problem
         const problem = await Problem.findById(submission.problem)
 
         // fetch test cases
         const testCases = await TestCase.find({
-            problem: submission.problem
+            problem:submission.problem
         })
 
         // execute code
         const result = await executeSubmission(
             submission,
-            testCases,
-            problem
+            testCases
         );
 
         // calculate score
@@ -40,4 +39,4 @@ const evaluateSubmission = async (submissionId) => {
     }
 }
 
-export { evaluateSubmission }
+export {evaluateSubmission}

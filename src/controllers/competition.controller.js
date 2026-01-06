@@ -16,14 +16,14 @@ const createCompetition = async (req, res) => {
         const userId = req.user.id;
 
         // Check if required fields are provided
-        if (!title || !description) {
+         if(!title || !description) {
             return res
-                .status(400) // Bad request status
-                .json({
-                    success: false,
-                    message: "title and description are required"
-                })
-        }
+            .status(400) // Bad request status
+            .json({
+                success:false,
+                message:"title and description are required"
+            })
+         }
 
         // Generate unique room code - keep trying until we get a unique one
         let roomCode;
@@ -38,7 +38,7 @@ const createCompetition = async (req, res) => {
         const competition = await Competition.create({
             title,
             description,
-            organizer: userId, // The person creating it is the organizer
+            organizer:userId, // The person creating it is the organizer
             roomCode, // Unique code for others to join
             startTime,
             endTime
@@ -67,32 +67,32 @@ const createCompetition = async (req, res) => {
 
 const joinCompetition = async (req, res) => {
     try {
-        const { roomCode } = req.body
+        const {roomCode} = req.body
         const userId = req.user.id
-
-        if (!roomCode) {
+    
+        if(!roomCode) {
             return res
-                .status(400)
-                .json({
-                    success: false,
-                    message: "Room Code is required"
-                })
+            .status(400)
+            .json({
+                success:false,
+                message:"Room Code is required"
+            })
         }
-
+    
         // find competition by room code
-
-        const competition = await Competition.findOne({ roomCode })
-
-        if (!competition) {
+    
+        const competition = await Competition.findOne({roomCode})
+    
+        if(!competition) {
             return res.status(404).json({
                 success: false,
                 message: "Room does not found"
             });
         }
-
+    
         // check if user already joined
         const userObjectId = new mongoose.Types.ObjectId(userId);
-        if (competition.registeredUsers.some(id => id.equals(userObjectId))) {
+        if(competition.registeredUsers.some(id => id.equals(userObjectId))) {
             return res.status(400).json({
                 success: false,
                 message: "User already joined this competition"
@@ -102,27 +102,27 @@ const joinCompetition = async (req, res) => {
         // add user to competition
         competition.registeredUsers.push(userObjectId)
         await competition.save()
-
+    
         // add competition to user
         await User.findByIdAndUpdate(userId, {
             $push: { registeredCompetitions: competition._id }
         })
-
+    
         return res
-            .status(200)
-            .json({
-                success: true,
-                message: "Successfully joined the competition",
-                competitionId: competition._id
-            });
+        .status(200)
+        .json({
+            success: true,
+            message: "Successfully joined the competition",
+            competitionId: competition._id
+        });
     } catch (error) {
         console.error(error);
         return res
-            .status(500)
-            .json({
-                success: false,
-                message: "Server error while joining competition"
-            });
+        .status(500)
+        .json({
+            success: false,
+            message: "Server error while joining competition"
+        });
     }
 }
 
@@ -132,12 +132,12 @@ const getAllCompetitions = async (req, res) => {
             .select("title description roomCode startTime endTime");
 
         return res
-            .status(200)
-            .json({
-                success: true,
-                message: "all competitions fetched successfully",
-                competitions
-            })
+        .status(200)
+        .json({
+            success:true,
+            message:"all competitions fetched successfully",
+            competitions
+        })
     } catch (error) {
         return res.status(500).json({
             success: false,
@@ -161,11 +161,11 @@ const getMyCompetitions = async (req, res) => {
         });
     } catch (error) {
         return res
-            .status(500)
-            .json({
-                success: false,
-                message: "Server error while fetching your competitions"
-            })
+        .status(500)
+        .json({
+            success:false,
+            message:"Server error while fetching your competitions"
+        })
     }
 }
 
@@ -175,7 +175,7 @@ const getCompetitionById = async (req, res) => {
         const userId = req.user.id;
 
         const competition = await Competition.findById(competitionId);
-
+        
         if (!competition) {
             return res.status(404).json({
                 success: false,
@@ -187,7 +187,7 @@ const getCompetitionById = async (req, res) => {
         const userObjectId = new mongoose.Types.ObjectId(userId);
         const isRegistered = competition.registeredUsers.some(id => id.equals(userObjectId));
         const isOrganizer = competition.organizer.toString() === userId;
-
+        
         if (!isRegistered && !isOrganizer) {
             return res.status(403).json({
                 success: false,
@@ -259,4 +259,4 @@ const submitCompetition = async (req, res) => {
     }
 };
 
-export { createCompetition, joinCompetition, getAllCompetitions, getMyCompetitions, getCompetitionById, submitCompetition }
+export {createCompetition, joinCompetition, getAllCompetitions, getMyCompetitions, getCompetitionById, submitCompetition}

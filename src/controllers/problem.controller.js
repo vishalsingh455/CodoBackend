@@ -4,90 +4,66 @@ import mongoose from "mongoose";
 
 const addProblem = async (req, res) => {
     try {
-        console.log('=== ADD PROBLEM CONTROLLER STARTED ===');
-        const { competitionId } = req.params
-
-        console.log('=== DEBUG: Received request body ===');
-        console.log('Full body:', JSON.stringify(req.body, null, 2));
-        console.log('competitionId:', competitionId);
-        console.log('userId:', req.user?.id);
+        const {competitionId} = req.params
 
         const {
             title,
-            description,
-            functionName,
-            returnType,
-            parameters,
-            starterTemplates,
+            statement,
+            inputFormat,
+            outputFormat,
             constraints,
             difficulty
         } = req.body;
-
-        console.log('=== DEBUG: Destructured fields ===');
-        console.log('title:', title, 'truthy:', !!title);
-        console.log('description:', description, 'truthy:', !!description);
-        console.log('functionName:', functionName, 'truthy:', !!functionName);
-        console.log('returnType:', returnType, 'truthy:', !!returnType);
-        console.log('parameters:', parameters, 'truthy:', !!parameters);
-        console.log('starterTemplates:', starterTemplates, 'truthy:', !!starterTemplates);
-        console.log('difficulty:', difficulty, 'truthy:', !!difficulty);
 
         const userId = req.user.id
 
         // Validate required fields
         if (
             !title ||
-            !description ||
-            !functionName ||
-            !returnType ||
-            !parameters ||
-            !starterTemplates ||
+            !statement ||
+            !inputFormat ||
+            !outputFormat ||
             !difficulty
         ) {
-            console.log('=== DEBUG: Validation failed ===');
             return res.status(400).json({
                 success: false,
                 message: "All required fields must be provided"
             });
         }
 
-        console.log('=== DEBUG: Validation passed, proceeding ===');
-
         // find competition
         const competition = await Competition.findById(competitionId)
         if (!competition) {
             return res
-                .status(404)
-                .json({
-                    success: false,
-                    message: "Competition not found"
-                });
+            .status(404)
+            .json({
+                success: false,
+                message: "Competition not found"
+            });
         }
 
-        // ownership check
-        if (competition.organizer.toString() !== userId) {
+        // owenership check
+        if(competition.organizer.toString() !== userId) {
             return res
-                .status(403)
-                .json({
-                    success: true,
-                    message: "Only organizers can add problem"
-                })
+            .status(403)
+            .json({
+                success:true,
+                message:"Only organizers can add problem"
+            })
         }
 
         // decide marks based on the difficulty
         let marksPerTestCase;
-        if (difficulty === 'easy') marksPerTestCase = 5
-        else if (difficulty === 'medium') marksPerTestCase = 10
-        else if (difficulty === 'hard') marksPerTestCase = 15
+        if(difficulty === 'easy') marksPerTestCase = 5
+        else if(difficulty === 'medium') marksPerTestCase = 10
+        else if(difficulty === 'hard') marksPerTestCase = 15
 
         // Create Problem
         const problem = await Problem.create({
             title,
-            description,
-            functionName,
-            returnType,
-            parameters,
-            starterTemplates,
+            statement,
+            inputFormat,
+            outputFormat,
             constraints,
             difficulty,
             marksPerTestCase,
@@ -95,12 +71,12 @@ const addProblem = async (req, res) => {
         })
 
         return res
-            .status(201)
-            .json({
-                success: true,
-                message: "Problem added successfully",
-                problem
-            })
+        .status(201)
+        .json({
+            success:true,
+            message:"Problem added successfully",
+            problem
+        })
 
     } catch (error) {
         console.error(error);
@@ -202,4 +178,4 @@ const getProblemById = async (req, res) => {
     }
 };
 
-export { addProblem, getProblemsByCompetition, getProblemById }
+export {addProblem, getProblemsByCompetition, getProblemById}

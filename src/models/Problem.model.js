@@ -7,34 +7,18 @@ const problemSchema = new mongoose.Schema(
             required: true
         },
 
-        description: {
+        statement: {
             type: String,
             required: true
         },
 
-        functionName: {
+        inputFormat: {
             type: String,
             required: true
         },
 
-        returnType: {
+        outputFormat: {
             type: String,
-            required: true
-        },
-
-        parameters: [{
-            name: {
-                type: String,
-                required: true
-            },
-            type: {
-                type: String,
-                required: true
-            }
-        }],
-
-        starterTemplates: {
-            type: Object,
             required: true
         },
 

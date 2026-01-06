@@ -10,9 +10,9 @@ const runCodePiston = async (language, code, input) => {
         }
 
         const fileName = language === "python" ? "main.py" :
-            language === "cpp" ? "main.cpp" :
-                language === "java" ? "Main.java" :
-                    "main.js";
+                        language === "cpp" ? "main.cpp" :
+                        language === "java" ? "Main.java" :
+                        "main.js";
 
         const response = await axios.post(
             "https://emkc.org/api/v2/piston/execute",
@@ -25,7 +25,7 @@ const runCodePiston = async (language, code, input) => {
                         content: code
                     }
                 ],
-                stdin: input + "\n"
+                stdin: input+"\n"
             },
             {
                 headers: {
@@ -44,10 +44,7 @@ const runCodePiston = async (language, code, input) => {
 
     } catch (error) {
         console.error("Piston error:", error.message || error);
-        return {
-            output: "",
-            error: error.message || "Piston execution failed"
-        };
+        return ""; // treat as failed
     }
 };
 

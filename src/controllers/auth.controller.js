@@ -1,9 +1,11 @@
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import { User } from '../models/User.model.js'
+import connectDB from '../db/db.js'
 
 const registerUser = async (req, res) => {
     try {
+        await connectDB();
         const {name, email, password} = req.body
         
         // validation
@@ -57,6 +59,7 @@ const registerUser = async (req, res) => {
 
 const loginUser = async (req, res) => {
     try {
+        await connectDB();
         const {email, password} = req.body
     
         // Validate input

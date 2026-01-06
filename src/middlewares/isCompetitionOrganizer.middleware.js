@@ -7,22 +7,22 @@ const isCompetitionOrganizerMiddleware = async (req, res, next) => {
 
         const competition = await Competition.findById(competitionId)
 
-        if(!competition) {
+        if (!competition) {
             return res
-            .status(404)
-            .json({
-                success: false,
-                message: "Competition not found"
-            });
+                .status(404)
+                .json({
+                    success: false,
+                    message: "Competition not found"
+                });
         }
 
-        if(competition.organizer.toString() !== userId) {
+        if (competition.organizer.toString() !== userId) {
             return res
-            .status(403)
-            .json({
-                success: false,
-                message: "Access denied. You are not the organizer of this competition"
-            });
+                .status(403)
+                .json({
+                    success: false,
+                    message: "Access denied. You are not the organizer of this competition"
+                });
         }
 
         //attach competition for reuse

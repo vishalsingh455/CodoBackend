@@ -3,12 +3,12 @@ import mongoose from "mongoose";
 const testCaseSchema = new mongoose.Schema(
     {
         input: {
-            type: String,
+            type: Object,
             required: true
         },
 
         expectedOutput: {
-            type: String,
+            type: mongoose.Schema.Types.Mixed,
             required: true
         },
 

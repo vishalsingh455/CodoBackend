@@ -1,6 +1,6 @@
 export const pistonLanguageMap = {
     python: "python3",
-    cpp: "cpp17",           // or "g++"
+    cpp: "cpp",
     java: "java",
     javascript: "javascript"
 };

@@ -36,4 +36,4 @@ const getMyResult = async (req, res) => {
     }
 }
 
-export {getMyResult}
+export { getMyResult }

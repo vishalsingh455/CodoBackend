@@ -3,7 +3,7 @@ import { Competition } from "../models/Competition.model.js";
 
 const getCompetitionSubmissions = async (req, res) => {
     try {
-        const {competitionId} = req.params
+        const { competitionId } = req.params
         const userId = req.user.id
 
         const competition = await Competition.findById(competitionId)
@@ -22,7 +22,7 @@ const getCompetitionSubmissions = async (req, res) => {
         }
 
         const submissions = await Submission.find({
-            competition:competitionId
+            competition: competitionId
         })
             .populate("user", "name email")
             .populate("problem", "title difficulty")
@@ -40,4 +40,4 @@ const getCompetitionSubmissions = async (req, res) => {
     }
 }
 
-export {getCompetitionSubmissions}
+export { getCompetitionSubmissions }

@@ -7,13 +7,13 @@ const getUserDashboard = async (req, res) => {
             .populate("organizedCompetitions")
             .populate("registeredCompetitions")
 
-        if(!user) {
+        if (!user) {
             return res
-            .status(404)
-            .json({
-                success: false,
-                message: "User not found"
-            });
+                .status(404)
+                .json({
+                    success: false,
+                    message: "User not found"
+                });
         }
 
         return res.status(200).json({
@@ -36,4 +36,4 @@ const getUserDashboard = async (req, res) => {
 
 }
 
-export {getUserDashboard}
+export { getUserDashboard }

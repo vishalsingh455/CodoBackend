@@ -17,6 +17,7 @@ import submissionRoutes from './routes/submission.routes.js' // Routes for code 
 import leaderboardRoutes from './routes/leaderboard.routes.js' // Routes for competition rankings
 import resultRoutes from './routes/result.routes.js' // Routes for results
 import analyticsRoutes from './routes/analytics.routes.js' // Routes for analytics/statistics
+import connectDB from "./db/db.js";
 
 // Load environment variables (like database passwords, API keys)
 dotenv.config()
@@ -32,6 +33,8 @@ app.use(cors({
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"]
 }));
+
+connectDB();
 
 
 

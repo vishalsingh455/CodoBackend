@@ -1,9 +1,7 @@
 import { User } from "../models/User.model.js";
-import connectDB from "../db/db.js";
 
 const getUserDashboard = async (req, res) => {
     try {
-        await connectDB();
         const userId = req.user.id
         const user = await User.findById(userId)
             .populate("organizedCompetitions")

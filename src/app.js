@@ -44,11 +44,7 @@ app.use(cookieParser())
 
 app.get("/", (req, res) => {
     res.send("Hello World!")
-<<<<<<< HEAD
-})      
-=======
 })
->>>>>>> parent of 49fa009 (improved version of backend (6/01/26))
 
 // Route setup - connect URL paths to their handlers
 // When someone visits /api/auth, use the auth routes

@@ -124,6 +124,10 @@ app.use((req, res, next) => {
 // Parse cookies from requests
 app.use(cookieParser())
 
+app.get("/", (req, res) => {
+    res.send("Hello World!")
+})      
+
 // Route setup - connect URL paths to their handlers
 // When someone visits /api/auth, use the auth routes
 app.use('/api/auth', authRoutes)

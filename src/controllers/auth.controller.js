@@ -207,7 +207,7 @@ const forgotPassword = async (req, res) => {
             .status(500)
             .json({
                 success: false,
-                message: "Server error while forgot password"
+                message: `Server error while forgot password ${error}}`
             })
     }
 }

@@ -33,9 +33,10 @@ const getCompetitionSubmissions = async (req, res) => {
             submissions
         });
     } catch (error) {
-        return res.status(200).json({
-            success: true,
-            submissions
+        return res.status(500).json({
+            success: false,
+            message: "Server error while fetching submissions",
+            //submissions
         });
     }
 }

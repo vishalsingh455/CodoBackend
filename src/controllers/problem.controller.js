@@ -4,13 +4,13 @@ import mongoose from "mongoose";
 
 const addProblem = async (req, res) => {
     try {
-        console.log('=== ADD PROBLEM CONTROLLER STARTED ===');
+        //console.log('=== ADD PROBLEM CONTROLLER STARTED ===');
         const { competitionId } = req.params
 
-        console.log('=== DEBUG: Received request body ===');
-        console.log('Full body:', JSON.stringify(req.body, null, 2));
-        console.log('competitionId:', competitionId);
-        console.log('userId:', req.user?.id);
+        // console.log('=== DEBUG: Received request body ===');
+        // console.log('Full body:', JSON.stringify(req.body, null, 2));
+        // console.log('competitionId:', competitionId);
+        // console.log('userId:', req.user?.id);
 
         const {
             title,
@@ -23,14 +23,14 @@ const addProblem = async (req, res) => {
             difficulty
         } = req.body;
 
-        console.log('=== DEBUG: Destructured fields ===');
-        console.log('title:', title, 'truthy:', !!title);
-        console.log('description:', description, 'truthy:', !!description);
-        console.log('functionName:', functionName, 'truthy:', !!functionName);
-        console.log('returnType:', returnType, 'truthy:', !!returnType);
-        console.log('parameters:', parameters, 'truthy:', !!parameters);
-        console.log('starterTemplates:', starterTemplates, 'truthy:', !!starterTemplates);
-        console.log('difficulty:', difficulty, 'truthy:', !!difficulty);
+        // console.log('=== DEBUG: Destructured fields ===');
+        // console.log('title:', title, 'truthy:', !!title);
+        // console.log('description:', description, 'truthy:', !!description);
+        // console.log('functionName:', functionName, 'truthy:', !!functionName);
+        // console.log('returnType:', returnType, 'truthy:', !!returnType);
+        // console.log('parameters:', parameters, 'truthy:', !!parameters);
+        // console.log('starterTemplates:', starterTemplates, 'truthy:', !!starterTemplates);
+        // console.log('difficulty:', difficulty, 'truthy:', !!difficulty);
 
         const userId = req.user.id
 
@@ -51,7 +51,7 @@ const addProblem = async (req, res) => {
             });
         }
 
-        console.log('=== DEBUG: Validation passed, proceeding ===');
+        //console.log('=== DEBUG: Validation passed, proceeding ===');
 
         // find competition
         const competition = await Competition.findById(competitionId)

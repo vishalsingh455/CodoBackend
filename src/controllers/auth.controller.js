@@ -160,6 +160,7 @@ const logoutUser = async (req, res) => {
 
 const forgotPassword = async (req, res) => {
     try {
+        await connectDB();
         const { email } = req.body;
         const user = await User.findOne({ email })
 
@@ -213,6 +214,7 @@ const forgotPassword = async (req, res) => {
 
 const resetPassword = async (req, res) => {
     try {
+        await connectDB();
         const { otp, newPassword } = req.body;
 
         if (!otp || !newPassword) {

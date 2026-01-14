@@ -75,6 +75,7 @@ const analyzeCode = async (req, res) => {
             You are an expert computer science instructor.
             Analyze this ${language} code and return a JSON object only.
             JSON keys: "time_complexity", "space_complexity", "explanation".
+            Dont explain code logic or dont give improving techniques. just discuss about the time and space complexity because this is for a competetion
             Code:
             ${code}
         `;

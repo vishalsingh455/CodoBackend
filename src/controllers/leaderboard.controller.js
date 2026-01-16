@@ -8,7 +8,7 @@ const getLeaderboard = async (req, res) => {
         // 1 Fetch all accepted submissions of this competition
         const submissions = await Submission.find({
             competition: competitionId,
-            status: "accepted"
+            //status: "accepted"
         }).populate("user", "name");
 
         // 2️ Aggregate score per user

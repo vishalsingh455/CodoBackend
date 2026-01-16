@@ -156,11 +156,28 @@ ${inputDeclarations}
 // };
 
 // Helper functions for type conversion
+const cppType = (value) => {
+    if (Array.isArray(value)) {
+        if (value.length === 0) return 'vector<int>';
+        if (typeof value[0] === 'number') return 'vector<int>';
+        if (typeof value[0] === 'string') return 'vector<string>';
+    }
+    if (typeof value === 'number') return 'int';
+    if (typeof value === 'string') return 'string';
+    if (typeof value === 'boolean') return 'bool';
+    return 'int'; // fallback
+};
 const generateCppWrapper = (userCode, functionName, parameters, testCaseInput) => {
     // Convert test case input to C++ variable declarations (vector<int> only)
+    // const inputDeclarations = Object.entries(testCaseInput)
+    //     .map(([key, value]) => `    std::vector<int> ${key} = ${cppValue(value)};`)
+    //     .join('\n');
     const inputDeclarations = Object.entries(testCaseInput)
-        .map(([key, value]) => `    std::vector<int> ${key} = ${cppValue(value)};`)
+        .map(([key, value]) =>
+            `    ${cppType(value)} ${key} = ${cppValue(value)};`
+        )
         .join('\n');
+
 
     const paramList = parameters.map(p => p.name).join(', ');
 

@@ -64,21 +64,32 @@ const analyzeCode = async (req, res) => {
     try {
         const { code, language } = req.body;
 
-        // Use Gemini 1.5 Flash for speed and free tier access
-        //const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
         const model = genAI.getGenerativeModel({
             model: "gemini-2.5-flash-lite",
             systemInstruction: "You are a code analyzer. Always return valid JSON only."
         });
 
         const prompt = `
-            You are an expert computer science instructor.
-            Analyze this ${language} code and return a JSON object only.
-            JSON keys: "time_complexity", "space_complexity", "explanation".
-            Dont explain code logic or dont give improving techniques. just discuss about the time and space complexity because this is for a competetion
-            Code:
-            ${code}
-        `;
+You are a strict code complexity analyzer for programming competitions.
+
+STRICT RULES:
+1. Output ONLY a valid JSON object.
+2. Do NOT use markdown, code blocks, or extra text.
+3. Use ONLY these keys:
+   - "time_complexity"
+   - "space_complexity"
+   - "explanation"
+4. All values must be strings.
+5. Do NOT explain code logic.
+6. Do NOT suggest improvements or optimizations.
+7. If complexity cannot be determined exactly, give the best possible Big-O estimate.
+
+TASK:
+Analyze the time and space complexity of the following ${language} code.
+
+CODE:
+${code}
+`;
 
         const result = await model.generateContent(prompt);
         const response = await result.response;
@@ -96,7 +107,7 @@ const analyzeCode = async (req, res) => {
         console.error("Gemini Error:", error.message);
         return res.status(500).json({
             success: false,
-            message: `AI analysis failed: ${error.message}kkkk`
+            message: `AI analysis failed: ${error.message}`
         });
     }
 };

@@ -15,7 +15,7 @@ const dockerConfig = {
     // TODO:
     // If Docker is not on PATH, set DOCKER_BIN to the full executable path
     // e.g. "C:\\Program Files\\Docker\\Docker\\resources\\bin\\docker.exe"
-    bin: process.env.DOCKER_BIN || "C:\\Users\\thevi\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin\\docker.exe",
+    bin: process.env.DOCKER_BIN || "docker",
 
     // TODO:
     // Only needed if you're talking to a remote Docker daemon

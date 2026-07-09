@@ -1,4 +1,4 @@
-import runCodePiston from "./pistonExecutor.js";
+import runCodeDocker from "./dockerExecutor.js";
 import generateWrapperCode from "./wrapperGenerator.js";
 
 const executeFunctionCode = async (language, userCode, functionName, parameters, testCaseInput) => {
@@ -7,7 +7,7 @@ const executeFunctionCode = async (language, userCode, functionName, parameters,
         const wrapperCode = generateWrapperCode(language, userCode, functionName, parameters, testCaseInput);
 
         // Execute the wrapper code (no stdin input needed)
-        const result = await runCodePiston(language, wrapperCode, "");
+        const result = await runCodeDocker(language, wrapperCode, "");
 
         return result;
     } catch (error) {
@@ -21,7 +21,7 @@ const executeFunctionCode = async (language, userCode, functionName, parameters,
 // Keep legacy function for backward compatibility (if needed)
 const executeCode = async (language, code, input) => {
     try {
-        const result = await runCodePiston(language, code, input);
+        const result = await runCodeDocker(language, code, input);
         return result;
     } catch (error) {
         return {

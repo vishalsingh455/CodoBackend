@@ -46,6 +46,12 @@ app.use(express.json())
 // Parse cookies from requests
 app.use(cookieParser())
 
+// Bypasses the Ngrok free-tier warning page for API calls
+app.use((req, res, next) => {
+    res.setHeader("ngrok-skip-browser-warning", "true");
+    next();
+});
+
 app.get("/", (req, res) => {
     res.send("Hello World!")
 })

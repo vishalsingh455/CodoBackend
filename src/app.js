@@ -25,7 +25,7 @@ dotenv.config()
 
 // Create the main Express application
 const app = express()
-
+app.set('trust proxy', 1);
 // Middleware setup (these run on every request)
 // Allow requests from frontend (localhost:5173 and 5174 are common dev ports)
 app.use(cors({
@@ -45,13 +45,11 @@ app.use(express.json())
 
 // Parse cookies from requests
 app.use(cookieParser())
-
 // Bypasses the Ngrok free-tier warning page for API calls
 app.use((req, res, next) => {
     res.setHeader("ngrok-skip-browser-warning", "true");
     next();
 });
-
 app.get("/", (req, res) => {
     res.send("Hello World!")
 })

@@ -54,7 +54,8 @@
 // }
 
 // export {analyzeCode}
-
+import dotenv from 'dotenv';
+dotenv.config();
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
 // Initialize Gemini
@@ -62,6 +63,7 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 const analyzeCode = async (req, res) => {
     try {
+        console.log("LOGGED KEY:", process.env.GEMINI_API_KEY ? "FOUND" : "NOT FOUND / UNDEFINED");
         const { code, language } = req.body;
 
         const model = genAI.getGenerativeModel({

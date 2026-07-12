@@ -19,7 +19,7 @@ import resultRoutes from './routes/result.routes.js' // Routes for results
 import analyticsRoutes from './routes/analytics.routes.js' // Routes for analytics/statistics
 import analyzeCodeRoutes from './routes/analyzeCode.routes.js' // Routes for code analysis
 import connectDB from "./db/db.js";
-
+import reportRoutes from './routes/report.routes.js' // Routes for bug/problem reports
 // Load environment variables (like database passwords, API keys)
 dotenv.config()
 
@@ -86,6 +86,8 @@ app.use("/api", resultRoutes)
 app.use("/api", analyticsRoutes)
 
 app.use('/api', analyzeCodeRoutes)
+
+app.use('/api', reportRoutes)
 
 // Export the app so it can be started in server.js
 export default app
